@@ -8,7 +8,11 @@ def main(argv):
   found = {}
   for arg in argv:
     found[arg] = []
+  seen = set()
   for path in paths:
+    if path in seen:
+      continue
+    seen.add(path)
     for arg in argv:
       exe = os.path.join(path, arg)
       if os.path.exists(exe):
