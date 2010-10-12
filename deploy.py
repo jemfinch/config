@@ -25,9 +25,13 @@ for (dirpath, dirnames, filenames) in os.walk(os.curdir):
     elif os.path.islink(hfilename):
       if os.readlink(hfilename) != rfilename:
         print >>sys.stderr, \
-              'Wanted to create symlink %s => %s but symlink existed.' % \
+              'Wanted to create symlink %s => %s but symlink existed and pointed elsewhere.' % \
               (rfilename, hfilename)
-    else:
-      print >>sys.stderr, \
-              'Wanted to create symlink %s => %s but file existed.' % \
-              (rfilename, hfilename)
+    elif os.path.isfile(hfilename):
+      if open(hfilename).read() == open(rfilename).read():
+        os.remove(hfilename)
+        os.symlink(rfilename, hfilename)
+      else:
+        print >>sys.stderr, \
+                'Wanted to create symlink %s => %s but file existed and differs.' % \
+                (rfilename, hfilename)
