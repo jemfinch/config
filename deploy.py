@@ -31,6 +31,8 @@ for (dirpath, dirnames, filenames) in os.walk(os.curdir):
       if open(hfilename).read() == open(rfilename).read():
         os.remove(hfilename)
         os.symlink(rfilename, hfilename)
+      elif 'work' in os.path.basename(filename).split('.'):
+        pass # Ignore .work or work. files.
       else:
         print >>sys.stderr, \
                 'Wanted to create symlink %s => %s but file existed and differs.' % \
