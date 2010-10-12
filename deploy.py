@@ -35,3 +35,4 @@ for (dirpath, dirnames, filenames) in os.walk(os.curdir):
         print >>sys.stderr, \
                 'Wanted to create symlink %s => %s but file existed and differs.' % \
                 (rfilename, hfilename)
+        os.system('diff -u %s %s' % (rfilename, hfilename))
