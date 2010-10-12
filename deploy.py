@@ -19,9 +19,15 @@ for (dirpath, dirnames, filenames) in os.walk(os.curdir):
     rfilename = os.path.normpath(os.path.join(os.getcwd(), filename))
     hfilename = homify(filename)
     if not os.path.exists(hfilename): # True in case of bad symlinks, as well.
-      os.remove(hfilename)
+      if os.path.islink(hfilename):
+        os.remove(hfilename)
       os.symlink(rfilename, hfilename)
-    elif os.path.islink(hfilename) and os.readlink(hfilename) != rfilename:
+    elif os.path.islink(hfilename):
+      if os.readlink(hfilename) != rfilename:
+        print >>sys.stderr, \
+              'Wanted to create symlink %s => %s but symlink existed.' % \
+              (rfilename, hfilename)
+    else:
       print >>sys.stderr, \
-            'Wanted to create symlink %s => %s but file existed.' % \
-            (rfilename, hfilename)
+              'Wanted to create symlink %s => %s but file existed.' % \
+              (rfilename, hfilename)

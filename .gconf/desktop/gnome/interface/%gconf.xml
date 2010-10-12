@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<gconf>
+	<entry name="gtk_key_theme" mtime="1286907562" type="string">
+		<stringvalue>Emacs</stringvalue>
+	</entry>
+</gconf>
