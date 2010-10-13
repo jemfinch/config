@@ -6,10 +6,17 @@ def homify(*args):
   return os.path.normpath(os.path.join(os.environ['HOME'], *args))
 
 for (dirpath, dirnames, filenames) in os.walk(os.curdir):
-  try:
-    dirnames.remove('.git')
-  except ValueError:
-    pass
+  if dirpath == os.curdir:
+    for ignored_filename in ['LICENSE']:
+      try:
+        filenames.remove(ignored_filename)
+      except ValueError:
+        pass
+    for ignored_dirname in ['.git']:
+      try:
+        dirnames.remove(ignored_dirname)
+      except ValueError:
+        pass
   for dirname in dirnames:
     hdirname = homify(dirpath, dirname)
     if not os.path.exists(hdirname):
