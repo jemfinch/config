@@ -1,3 +1,5 @@
 Emacs.menuBar: off
 Emacs.toolBar: -1
 Emacs.verticalScrollBars: off
+XTerm*foreground: green
+XTerm*background: black
