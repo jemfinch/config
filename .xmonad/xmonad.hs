@@ -18,4 +18,5 @@ main = xmonad $ defaultConfig
          , borderWidth = 0
          } `additionalKeys`
          [ ((mod4Mask .|. shiftMask, xK_z), spawn "xscreensaver-command -lock")
+         , ((mod4Mask, xK_e), spawn "emacsclient -c")
          ]
