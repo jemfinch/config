@@ -3,5 +3,11 @@
 TRASH="$HOME/Trash/`date +%Y%m%d`"
 mkdir -p $TRASH
 for file in "$@"; do
-    mv $file $TRASH
+  if [ -e "$TRASH/`basename $file`" ]
+  then
+    TARGET="$TRASH/`basename $file`.`date +%s`"
+  else
+    TARGET="$TRASH"
+  fi
+  mv "$file" $TARGET
 done
