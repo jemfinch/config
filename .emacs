@@ -16,10 +16,11 @@
 ;(setq auto-mode-alist (cons '("httpd.conf$" . apache-mode) auto-mode-alist))
 
 (setq cw/python-mode-viper-modifier-map (make-sparse-keymap))
-(define-key cw/python-mode-viper-modifier-map
-  (kbd "DEL") 'py-electric-backspace)
-(define-key cw/python-mode-viper-modifier-map
-  (kbd "<backspace>") 'py-electric-backspace)
+; This interacts poorly with some work-related .el files I use.
+;(define-key cw/python-mode-viper-modifier-map
+;  (kbd "DEL") 'py-electric-backspace)
+;(define-key cw/python-mode-viper-modifier-map
+;  (kbd "<backspace>") 'py-electric-backspace)
 (define-key cw/python-mode-viper-modifier-map
   (kbd "C-h") 'help)
 (viper-modify-major-mode
@@ -77,7 +78,7 @@
 
 (setq-default c-basic-offset 2)
 
-(load-file ".emacs.d/work.el")
+(load-file "~/.emacs.d/work.el")
 
 ; Color theme addon.
 ;(load-file (expand-file-name "~/.emacs.d/color-theme.el"))
@@ -103,9 +104,17 @@
                             'font-lock-comment-face))))))
 
 (menu-bar-mode)
-(custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- '(debug-on-error t))
+(desktop-save-mode 1)
+(setq vc-follow-symlinks nil)
+
+(defun quit-emacs ()
+  (interactive)
+  (desktop-save "~")
+  (save-buffers-kill-emacs))
+
+
+; Useful bindings that are shadowed by viper-mode:
+; C-h help-command
+; C-h v describe-key
+; C-h f describe-function
+; C-h b describe-bindings
