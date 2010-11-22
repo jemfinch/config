@@ -6,5 +6,5 @@ alias l='ls -CF'
 
 source ~/.envrc
 
-alias ack=ack-grep
+alias ack="ack-grep -a"
 umask 0007
