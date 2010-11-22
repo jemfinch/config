@@ -1,4 +1,4 @@
 escape "^Gg"
 defescape "^Gg"
 caption always "%{Bk}%m/%d %{W}%c:%s %A %{g}|%{w} %?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?"
-
+flow off
