@@ -31,7 +31,7 @@ for (dirpath, dirnames, filenames) in os.walk(os.curdir):
         filenames.remove(ignored_filename)
       except ValueError:
         pass
-    for ignored_dirname in ['.git']:
+    for ignored_dirname in ['.git', 'scripts']:
       try:
         dirnames.remove(ignored_dirname)
       except ValueError:
@@ -64,3 +64,7 @@ for (dirpath, dirnames, filenames) in os.walk(os.curdir):
                 'Did not symlink %s => %s; file exists and differs.' % \
                 (rfilename, hfilename)
         os.system('diff -u %s %s' % (rfilename, hfilename))
+
+scripts_dir = os.path.join(os.curdir, 'scripts')
+for script in sorted(os.listdir(scripts_dir)):
+  os.system(os.path.join(scripts_dir, script))
