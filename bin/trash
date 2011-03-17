@@ -10,4 +10,6 @@ for file in "$@"; do
     TARGET="$TRASH"
   fi
   mv "$file" $TARGET
+  # XXX Should actually gzip before mv
+  gzip $TARGET >/dev/null 2>&1
 done

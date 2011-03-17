@@ -112,6 +112,17 @@
   (desktop-save "~")
   (save-buffers-kill-emacs))
 
+(defun journal-new-day ()
+  (interactive)
+  (insert (format-time-string "* %Y-%m-%d  %A\n\n")))
+
+(defun journal-new-entry ()
+  (interactive)
+  (insert (format-time-string "** %Y-%m-%d %H:%M:%S ")))
+
+(define-prefix-command 'personal-map)
+(global-set-key "\C-c" personal-map)
+(define-key personal-map "j" 'journal-new-entry)
 
 ; Useful bindings that are shadowed by viper-mode:
 ; C-h help-command

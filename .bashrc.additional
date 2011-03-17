@@ -8,3 +8,8 @@ source ~/.envrc
 
 alias ack="ack-grep -a"
 umask 0007
+
+HISTSIZE=1000000
+HISTFILESIZE=2000000000
+
+shopt -s histappend

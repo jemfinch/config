@@ -5,6 +5,7 @@ xset m 1 1
 #feh --bg-center Pictures/dijkstra.jpg
 xcompmgr -n &
 hsetroot -solid \#888888
+ls /home/build/public/eng/elisp/google.el > /dev/null  # prime cache
 emacs --daemon
 killall gnome-screensaver
 xscreensaver -no-splash &
