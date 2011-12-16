@@ -1,0 +1,20 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+  echo "Usage: bakswap <filename>"
+  exit 1
+fi
+
+if [ ! -e "$1" ]; then
+  echo "File '$1' does not exist"
+  exit 1
+fi
+
+if [ ! -e "$1.bak" ]; then
+  echo "File '$1.bak' does not exist"
+  exit 1
+fi
+
+FILE=`tempfile`
+cp -f "$1" "$FILE" && cp -f "$1.bak" "$1" && cp -f "$FILE" "$1.bak"
+rm -f $FILE

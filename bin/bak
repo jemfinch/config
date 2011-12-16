@@ -1,0 +1,9 @@
+#!/bin/bash
+
+for filename in "$@"; do
+  if [ -e "$filename.bak" ]; then
+    echo "$filename.bak exists; backing it up first"
+    bak $filename.bak
+  fi;
+  cp -Rf "$filename" "$filename.bak"
+done
