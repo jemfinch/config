@@ -1,15 +1,41 @@
 #!/bin/sh
 
-TRASH="$HOME/Trash/`date +%Y%m%d`"
-mkdir -p $TRASH
-for file in "$@"; do
-  if [ -e "$TRASH/`basename $file`" ]
-  then
-    TARGET="$TRASH/`basename $file`.`date +%s`"
+set -e
+
+TRASH_BASE="$HOME/Trash"
+
+if [ -z "$TRASH" ]; then
+  TRASH="$TRASH_BASE/`date +%Y%m%d`"
+  mkdir -p $TRASH
+  rm -f $TRASH_BASE/Last # ??? Shouldn't ln -sf overwrite this?
+  ln -sf $TRASH $TRASH_BASE/Last
+else
+  # Assume it's already created.
+  test -d $TRASH
+fi
+
+
+function trash_filename() {
+  SHORTNAME="$TRASH/`basename $1`"
+  FULLNAME="$SHORTNAME.`date +%Y-%m-%dT%H:%M:%S.%N`"
+  if [ -e "$SHORTNAME" ]; then
+    echo "$FULLNAME"
   else
-    TARGET="$TRASH"
+    echo "$SHORTNAME"
   fi
-  mv "$file" $TARGET
-  # XXX Should actually gzip before mv
-  gzip $TARGET >/dev/null 2>&1
+}
+
+for file in "$@"; do
+  TARGET=`trash_filename $file`
+  if [ -d "$file" ]; then
+    mkdir -p $TARGET
+    for filename in `ls $file`; do
+      TRASH=$TARGET $0 "$file/$filename"
+    done
+  else
+    gzip -c "$file" > "${TARGET}.gz"
+  fi
+  if [ "`basename $0`" = "trash" ]; then
+    rm -r "$file"
+  fi
 done
